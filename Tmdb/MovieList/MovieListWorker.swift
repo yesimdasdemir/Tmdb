@@ -12,7 +12,39 @@
 
 import UIKit
 
-class MovieListWorker {
-  func doSomeWork() {
-  }
+final class MovieListWorker {
+//    func getMovieList(request: GetMovieList.MovieList.Request, success:@escaping(responseHandler), fail:@escaping(responseHandler)) {
+        
+//        let url = URL(string: request.transactionUrl)
+//
+//        let session = URLSession.shared
+//
+//        if let url = url {
+//            let task = session.dataTask(with: url) { (data, response, error) in
+//
+//                if error != nil {
+//                    let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+//
+//                    let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+//
+//                    alert.addAction(okButton)
+//
+//                } else {
+//
+//                    if let data = data {
+//
+//                        do {
+//                            let response = try JSONDecoder().decode(GetMovieList.MovieList.Response.self, from: data)
+//                            DispatchQueue.main.async { [weak self] in
+//                                print(response)
+//                            }
+//                        } catch  {
+//                            print(error)
+//                        }
+//                    }
+//                }
+//            }
+//            task.resume()
+//        }
+//    }
 }

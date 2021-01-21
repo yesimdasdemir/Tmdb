@@ -13,16 +13,15 @@
 import UIKit
 
 protocol MovieListPresentationLogic {
-  func presentSomething(response: MovieList.Something.Response)
+    func presentMovieList(response: GetMovieList.MovieList.Response?)
 }
 
-class MovieListPresenter: MovieListPresentationLogic {
-  weak var viewController: MovieListDisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentSomething(response: MovieList.Something.Response) {
-    let viewModel = MovieList.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
-  }
+final class MovieListPresenter: MovieListPresentationLogic {
+    weak var viewController: MovieListDisplayLogic?
+    
+    // MARK: Do something
+    
+    func presentMovieList(response: GetMovieList.MovieList.Response?) {
+        viewController?.displayMovieList(response: response)
+    }
 }

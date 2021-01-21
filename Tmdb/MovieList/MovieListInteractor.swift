@@ -13,23 +13,57 @@
 import UIKit
 
 protocol MovieListBusinessLogic {
-  func doSomething(request: MovieList.Something.Request)
+    func getMovieList()
 }
 
 protocol MovieListDataStore {
-  //var name: String { get set }
+    //var name: String { get set }
 }
 
-class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
-  var presenter: MovieListPresentationLogic?
-  var worker: MovieListWorker?
-  //var name: String = ""
+final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
+    var presenter: MovieListPresentationLogic?
+    var worker: MovieListWorker?
     
-  func doSomething(request: MovieList.Something.Request) {
-    worker = MovieListWorker()
-    worker?.doSomeWork()
+    var response: GetMovieList.MovieList.Response?
     
-    let response = MovieList.Something.Response()
-    presenter?.presentSomething(response: response)
-  }
+    func getMovieList() {
+        
+        worker = MovieListWorker()
+        
+        let request = GetMovieList.MovieList.Request(pageId: 1)
+        
+        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a&page=1")
+        
+        let session = URLSession.shared
+        
+        if let url = url {
+            let task = session.dataTask(with: url) { (data, response, error) in
+                
+                if error != nil {
+                    let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                    
+                    let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    
+                    alert.addAction(okButton)
+                    
+                } else {
+                    
+                    if let data = data {
+                        
+                        do {
+                            let response = try JSONDecoder().decode(GetMovieList.MovieList.Response.self, from: data)
+                            DispatchQueue.main.async { [weak self] in
+                                debugPrint(response)
+                                self?.response = response
+                                self?.presenter?.presentMovieList(response: response)
+                            }
+                        } catch  {
+                            print(error)
+                        }
+                    }
+                }
+            }
+            task.resume()
+        }
+    }
 }

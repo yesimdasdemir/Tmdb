@@ -13,58 +13,87 @@
 import UIKit
 
 protocol MovieListDisplayLogic: class {
-    
+    func displayMovieList(response: GetMovieList.MovieList.Response?)
 }
 
-class MovieListViewController: UIViewController, MovieListDisplayLogic {
-  var interactor: MovieListBusinessLogic?
-  var router: (NSObjectProtocol & MovieListRoutingLogic & MovieListDataPassing)?
-
-  // MARK: Object lifecycle
-  
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    setup()
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    setup()
-  }
-  
-  // MARK: Setup
-  
-  private func setup() {
-    let viewController = self
-    let interactor = MovieListInteractor()
-    let presenter = MovieListPresenter()
-    let router = MovieListRouter()
-    viewController.interactor = interactor
-    viewController.router = router
-    interactor.presenter = presenter
-    presenter.viewController = viewController
-    router.viewController = viewController
-    router.dataStore = interactor
-  }
-  
-  // MARK: Routing
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if let scene = segue.identifier {
-      let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-      if let router = router, router.responds(to: selector) {
-        router.perform(selector, with: segue)
-      }
+final class MovieListViewController: UIViewController, MovieListDisplayLogic {
+    var interactor: MovieListBusinessLogic?
+    var router: (NSObjectProtocol & MovieListRoutingLogic & MovieListDataPassing)?
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var response: GetMovieList.MovieList.Response?
+    
+    // MARK: Object lifecycle
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
     }
-  }
-  
-  // MARK: View lifecycle
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
-  
-  // MARK: Do something
-  
-  //@IBOutlet weak var nameTextField: UITextField!
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    // MARK: Setup
+    
+    private func setup() {
+        let viewController = self
+        let interactor = MovieListInteractor()
+        let presenter = MovieListPresenter()
+        let router = MovieListRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
+    }
+    
+    // MARK: Routing
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        navigationItem.title = "MovieList"
+        
+        interactor?.getMovieList()
+    }
+    
+    // MARK: Do something
+    
+    func displayMovieList(response: GetMovieList.MovieList.Response?) {
+        self.response = response
+        tableView.reloadData()
+    }
+}
+
+extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell()
+        
+        if let viewModel = response, let titleList = viewModel.results {
+            cell.textLabel?.text = titleList[indexPath.row].title
+        }
+        return cell
+    }
 }

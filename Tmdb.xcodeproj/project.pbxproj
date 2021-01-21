@@ -10,7 +10,7 @@
 		246B504C25B8A86400EC93F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B504B25B8A86400EC93F9 /* AppDelegate.swift */; };
 		246B504E25B8A86400EC93F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B504D25B8A86400EC93F9 /* SceneDelegate.swift */; };
 		246B505025B8A86400EC93F9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B504F25B8A86400EC93F9 /* ViewController.swift */; };
-		246B505325B8A86400EC93F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 246B505125B8A86400EC93F9 /* Main.storyboard */; };
+		246B505325B8A86400EC93F9 /* MovieList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 246B505125B8A86400EC93F9 /* MovieList.storyboard */; };
 		246B505625B8A86400EC93F9 /* Tmdb.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 246B505425B8A86400EC93F9 /* Tmdb.xcdatamodeld */; };
 		246B505825B8A86500EC93F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 246B505725B8A86500EC93F9 /* Assets.xcassets */; };
 		246B505B25B8A86500EC93F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 246B505925B8A86500EC93F9 /* LaunchScreen.storyboard */; };
@@ -28,7 +28,7 @@
 		246B504B25B8A86400EC93F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		246B504D25B8A86400EC93F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		246B504F25B8A86400EC93F9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		246B505225B8A86400EC93F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		246B505225B8A86400EC93F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MovieList.storyboard; sourceTree = "<group>"; };
 		246B505525B8A86400EC93F9 /* Tmdb.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tmdb.xcdatamodel; sourceTree = "<group>"; };
 		246B505725B8A86500EC93F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		246B505A25B8A86500EC93F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,7 +77,6 @@
 				246B504B25B8A86400EC93F9 /* AppDelegate.swift */,
 				246B504D25B8A86400EC93F9 /* SceneDelegate.swift */,
 				246B504F25B8A86400EC93F9 /* ViewController.swift */,
-				246B505125B8A86400EC93F9 /* Main.storyboard */,
 				246B505725B8A86500EC93F9 /* Assets.xcassets */,
 				246B505925B8A86500EC93F9 /* LaunchScreen.storyboard */,
 				246B505C25B8A86500EC93F9 /* Info.plist */,
@@ -89,6 +88,7 @@
 		246E0B7325BA07D100DFFF95 /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
+				246B505125B8A86400EC93F9 /* MovieList.storyboard */,
 				246E0B7425BA080E00DFFF95 /* MovieListPresenter.swift */,
 				246E0B7525BA080E00DFFF95 /* MovieListWorker.swift */,
 				246E0B7625BA080E00DFFF95 /* MovieListRouter.swift */,
@@ -159,7 +159,7 @@
 				246E0B6D25BA063200DFFF95 /* Business in Resources */,
 				246B505B25B8A86500EC93F9 /* LaunchScreen.storyboard in Resources */,
 				246B505825B8A86500EC93F9 /* Assets.xcassets in Resources */,
-				246B505325B8A86400EC93F9 /* Main.storyboard in Resources */,
+				246B505325B8A86400EC93F9 /* MovieList.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,12 +186,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		246B505125B8A86400EC93F9 /* Main.storyboard */ = {
+		246B505125B8A86400EC93F9 /* MovieList.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				246B505225B8A86400EC93F9 /* Base */,
 			);
-			name = Main.storyboard;
+			name = MovieList.storyboard;
 			sourceTree = "<group>";
 		};
 		246B505925B8A86500EC93F9 /* LaunchScreen.storyboard */ = {

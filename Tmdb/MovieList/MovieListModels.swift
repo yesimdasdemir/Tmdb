@@ -12,17 +12,44 @@
 
 import UIKit
 
-enum MovieList {
+enum GetMovieList {
   // MARK: Use cases
   
-  enum Something {
-    struct Request {
+  enum MovieList {
+    struct Request: Codable {
+        let apiKey: String?
+        let transactionUrl: String
+        let pageId: Int?
+        
+        init(pageId: Int) {
+            self.apiKey = "fd2b04342048fa2d5f728561866ad52a&"
+            self.transactionUrl = "https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=" + String(describing: self.apiKey) + String(pageId)
+            self.pageId = pageId
+        }
     }
     
-    struct Response {
+    struct Response: Codable {
+        let page: Int?
+        let total_pages: Int?
+        let total_results: Int?
+        let results: [MovieListItem]?
     }
     
     struct ViewModel {
+        
     }
   }
+}
+
+struct MovieListItem: Codable {
+    let id: Int?
+    let backdrop_path: String?
+    let original_title: String
+    let overview: String?
+    let popularity: Double?
+    let poster_path: String?
+    let release_date: String?
+    let title: String?
+    let vote_average: Float?
+    let vote_count: Int?
 }
