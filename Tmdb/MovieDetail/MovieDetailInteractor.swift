@@ -17,13 +17,15 @@ protocol MovieDetailBusinessLogic {
 }
 
 protocol MovieDetailDataStore {
-    //var name: String { get set }
+    var id: String? { get set }
 }
 
 final class MovieDetailInteractor: MovieDetailBusinessLogic, MovieDetailDataStore {
+   
     var presenter: MovieDetailPresentationLogic?
     var worker: MovieDetailWorker?
-    //var name: String = ""
+    
+    var id: String?
     
     // MARK: Do something
     

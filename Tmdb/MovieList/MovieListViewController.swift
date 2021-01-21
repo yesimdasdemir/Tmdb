@@ -22,7 +22,17 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
     
     @IBOutlet weak var tableView: UITableView!
     
+    let searchController = UISearchController(searchResultsController: nil)
     var response: GetMovieList.MovieList.Response?
+    var filteredMovies: [MovieListItem] = []
+    
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
     
     // MARK: Object lifecycle
     
@@ -70,6 +80,7 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
         tableView.delegate = self
         tableView.dataSource = self
         navigationItem.title = "MovieList"
+        setSearchViewController()
         
         interactor?.getMovieList()
     }
@@ -80,10 +91,34 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
         self.response = response
         tableView.reloadData()
     }
+    
+    private func setSearchViewController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Movies"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    
+    func filterContentForSearchText(_ searchText: String,
+                                    category: MovieListItem? = nil) {
+        
+        if let response = response, let items = response.results {
+            filteredMovies = items.filter { item -> Bool in
+                return (item.title?.lowercased().contains(searchText.lowercased()) ?? false)
+            }
+        }
+        
+        tableView.reloadData()
+    }
 }
 
 extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredMovies.count
+        }
+        
         return 10
     }
     
@@ -91,9 +126,25 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = UITableViewCell()
         
-        if let viewModel = response, let titleList = viewModel.results {
-            cell.textLabel?.text = titleList[indexPath.row].title
+        if isFiltering {
+            cell.textLabel?.text = filteredMovies[indexPath.row].title
+        } else {
+            if let viewModel = response, let titleList = viewModel.results {
+                cell.textLabel?.text = titleList[indexPath.row].title
+            }
         }
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        router?.routeToMovieDetail()
+    }
+}
+
+extension MovieListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        filterContentForSearchText(searchBar.text!)
     }
 }

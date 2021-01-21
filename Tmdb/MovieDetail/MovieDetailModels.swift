@@ -17,9 +17,11 @@ enum GetMovieDetail {
     
     enum MovieDetail {
         struct Request {
+            
         }
         
         struct Response {
+            
         }
         
         struct ViewModel {

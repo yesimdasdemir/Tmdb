@@ -27,6 +27,7 @@
 		246E0B8D25BA1CEC00DFFF95 /* MovieDetailModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246E0B8725BA1CEC00DFFF95 /* MovieDetailModels.swift */; };
 		246E0B8E25BA1CEC00DFFF95 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246E0B8825BA1CEC00DFFF95 /* MovieDetailViewController.swift */; };
 		246E0B8F25BA1CEC00DFFF95 /* MovieDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246E0B8925BA1CEC00DFFF95 /* MovieDetailInteractor.swift */; };
+		246E0B9325BA1F3500DFFF95 /* MovieDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 246E0B9225BA1F3500DFFF95 /* MovieDetail.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		246E0B8725BA1CEC00DFFF95 /* MovieDetailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailModels.swift; sourceTree = "<group>"; };
 		246E0B8825BA1CEC00DFFF95 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		246E0B8925BA1CEC00DFFF95 /* MovieDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailInteractor.swift; sourceTree = "<group>"; };
+		246E0B9225BA1F3500DFFF95 /* MovieDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MovieDetail.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				246E0B8725BA1CEC00DFFF95 /* MovieDetailModels.swift */,
 				246E0B8825BA1CEC00DFFF95 /* MovieDetailViewController.swift */,
 				246E0B8925BA1CEC00DFFF95 /* MovieDetailInteractor.swift */,
+				246E0B9225BA1F3500DFFF95 /* MovieDetail.storyboard */,
 			);
 			path = MovieDetail;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				246B505B25B8A86500EC93F9 /* LaunchScreen.storyboard in Resources */,
 				246B505825B8A86500EC93F9 /* Assets.xcassets in Resources */,
 				246B505325B8A86400EC93F9 /* MovieList.storyboard in Resources */,
+				246E0B9325BA1F3500DFFF95 /* MovieDetail.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

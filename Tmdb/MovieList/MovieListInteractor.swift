@@ -17,7 +17,7 @@ protocol MovieListBusinessLogic {
 }
 
 protocol MovieListDataStore {
-    //var name: String { get set }
+    var id: String? { get set }
 }
 
 final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
@@ -25,6 +25,7 @@ final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
     var worker: MovieListWorker?
     
     var response: GetMovieList.MovieList.Response?
+    var id: String?
     
     func getMovieList() {
         
