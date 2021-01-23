@@ -30,8 +30,9 @@ final class MovieDetailInteractor: MovieDetailBusinessLogic, MovieDetailDataStor
     // MARK: Do something
     
     func getMovieDetail() {
+        let urlLink = "https://api.themoviedb.org/3/movie/\(selectedMovieId)" + "?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a"
         
-        let url = URL(string: "https://api.themoviedb.org/3/movie/287947?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a")
+        let url = URL(string: urlLink)
         
         let session = URLSession.shared
         

@@ -146,7 +146,16 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        router?.routeToMovieDetail(selectedMovieId: indexPath.row)
+        
+        if isFiltering {
+            if let selectedId = filteredMovies[indexPath.row].id {
+                router?.routeToMovieDetail(selectedMovieId: selectedId)
+            }
+        } else {
+            if let movieItemList = movieItemList, let selectedId: Int = movieItemList[indexPath.row].id {
+                router?.routeToMovieDetail(selectedMovieId: selectedId)
+            }
+        }
     }
     
     private func initCollectionView() {
