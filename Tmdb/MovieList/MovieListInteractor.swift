@@ -31,9 +31,9 @@ final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
         
         worker = MovieListWorker()
         
-        let request = GetMovieList.MovieList.Request(pageId: 1)
+        let request = GetMovieList.MovieList.Request(pageId: 2)
         
-        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a&page=1")
+        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a&page=2")
         
         let session = URLSession.shared
         

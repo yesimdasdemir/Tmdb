@@ -23,7 +23,15 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
     @IBOutlet weak var tableView: UITableView!
     
     let searchController = UISearchController(searchResultsController: nil)
-    var response: GetMovieList.MovieList.Response?
+    var movieItemList: [MovieListItem]?
+    var response: GetMovieList.MovieList.Response? {
+        didSet {
+            guard let items = response?.results else {
+                return
+            }
+            movieItemList = items
+        }
+    }
     var filteredMovies: [MovieListItem] = []
     
     var isSearchBarEmpty: Bool {
@@ -79,6 +87,11 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
         
         tableView.delegate = self
         tableView.dataSource = self
+        registerTableViewCells()
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        tableView.addGestureRecognizer(gestureRecognizer)
+        
         navigationItem.title = "MovieList"
         setSearchViewController()
         
@@ -90,6 +103,11 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
     func displayMovieList(response: GetMovieList.MovieList.Response?) {
         self.response = response
         tableView.reloadData()
+    }
+    
+    @objc
+    private func closeKeyboard() {
+        tableView.keyboardDismissMode = .onDrag
     }
     
     private func setSearchViewController() {
@@ -111,30 +129,54 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
         
         tableView.reloadData()
     }
+    
+    private func registerTableViewCells() {
+        let cell = UINib(nibName: "MovieItemViewCell", bundle: nil)
+        tableView.register(cell, forCellReuseIdentifier: "MovieItemViewCell")
+    }
 }
 
 extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredMovies.count
-        }
-        
-        return 10
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell()
-        
-        if isFiltering {
-            cell.textLabel?.text = filteredMovies[indexPath.row].title
-        } else {
-            if let viewModel = response, let titleList = viewModel.results {
-                cell.textLabel?.text = titleList[indexPath.row].title
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "MovieItemViewCell") as? MovieItemViewCell {
+            
+            if isFiltering {
+                
+                 let viewModel = filteredMovies.map({ item -> SingleItemViewModel in
+                    return SingleItemViewModel(title: item.title,
+                                               subTitle: item.release_date,
+                                               imageWidth: "200",
+                                               posterPath: item.poster_path!)
+                })
+                
+                cell.movieItemView.viewModel = viewModel
+                
+            } else {
+                if let movieItemList = movieItemList {
+                    
+                    let viewModel = movieItemList.map({ item -> SingleItemViewModel in
+                       return SingleItemViewModel(title: item.title,
+                                                  subTitle: item.release_date,
+                                                  imageWidth: "200",
+                                                  posterPath: item.poster_path!)
+                   })
+
+                    cell.movieItemView.viewModel = viewModel
+                    cell.movieItemView.collectionViewDelegate = self
+                }
             }
+            return cell
         }
-        
-        return cell
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -146,5 +188,11 @@ extension MovieListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
+    }
+}
+
+extension MovieListViewController: MovieItemViewProtocol {
+    func didSelectRow(with id: Int) {
+        router?.routeToMovieDetail()
     }
 }
