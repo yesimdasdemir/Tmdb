@@ -109,7 +109,7 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isFiltering {
-            filteredMovies.count
+            return filteredMovies.count
         }
         return movieItemList?.count ?? 0
     }
@@ -122,10 +122,10 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
                     return SingleItemViewModel(title: item.title,
                                                subTitle: item.releaseDate,
                                                imageWidth: "200",
-                                               posterPath: item.posterPath!)
+                                               posterPath: item.posterPath)
                 })
                 
-                cell.singleItemView.viewModel = viewModel[indexPath.row]
+                cell.configure(with: viewModel[indexPath.row])
                 
             } else {
                 if let movieItemList = movieItemList {
@@ -134,10 +134,10 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
                         return SingleItemViewModel(title: item.title,
                                                    subTitle: item.releaseDate,
                                                    imageWidth: "200",
-                                                   posterPath: item.posterPath!)
+                                                   posterPath: item.posterPath)
                     })
                     
-                    cell.singleItemView.viewModel = viewModel[indexPath.row]
+                    cell.configure(with: viewModel[indexPath.row])
                 }
             }
             return cell

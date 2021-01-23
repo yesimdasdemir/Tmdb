@@ -1,21 +1,19 @@
 //
-//  SingleItemView.swift
+//  SimpleDetailView.swift
 //  Tmdb
 //
-//  Created by Yeşim Daşdemir on 22.01.2021.
+//  Created by Yeşim Daşdemir on 24.01.2021.
 //
 
 import UIKit
 
-final class SingleItemView: UIView {
-    
-    @IBOutlet weak var contentView: UIView!
+final class SimpleDetailView: UIView {
+    @IBOutlet weak var view: UIView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var stackView: UIStackView!
-    
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subTitleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
+    private let nibName = String(describing: CustomCollectionViewCell.self)
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,7 +25,7 @@ final class SingleItemView: UIView {
         loadNib()
     }
     
-    var viewModel: SingleItemViewModel? {
+    var viewModel: SimpleDetailViewModel? {
         didSet {
             guard let viewModel = viewModel else {
                 return
@@ -36,35 +34,35 @@ final class SingleItemView: UIView {
         }
     }
     
-    private func initView(viewModel: SingleItemViewModel) {
+    private func initView(viewModel: SimpleDetailViewModel) {
         
         if let url = URL(string: viewModel.imageLink) {
             load(url: url)
         }
-        
+                
         titleLabel.text = viewModel.title
-        subTitleLabel.text = viewModel.subTitle
+        descriptionLabel.text = viewModel.description
     }
     
     func load(url: URL) {
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url) {
-                    DispatchQueue.main.async {
-                        self?.imageView.image = UIImage(data: data)
-                    }
+                DispatchQueue.main.async {
+                    self?.imageView.image = UIImage(data: data)
+                   
+                }
             }
         }
     }
-
-    // MARK: LoadNib
+    
+    // MARK: Nib
     
     private func loadNib() {
         let nibName = String(describing: type(of: self))
         Bundle.main.loadNibNamed(nibName, owner: self, options: nil)
         
-        contentView.frame = bounds
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        addSubview(contentView)
+        view.frame = bounds
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(view)
     }
 }

@@ -13,15 +13,23 @@
 import UIKit
 
 protocol MovieDetailPresentationLogic {
-    func presentMovieDetail(response: GetMovieDetail.MovieDetail.Response)
+    func presentMovieDetail(response: GetMovieDetail.MovieDetail.Response?)
 }
 
 final class MovieDetailPresenter: MovieDetailPresentationLogic {
-  weak var viewController: MovieDetailDisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentMovieDetail(response: GetMovieDetail.MovieDetail.Response) {
-    viewController?.displayMovieDetail()
-  }
+    weak var viewController: MovieDetailDisplayLogic?
+    
+    // MARK: Do something
+    
+    func presentMovieDetail(response: GetMovieDetail.MovieDetail.Response?) {
+        
+        if let response = response {
+            
+            let viewModel = SimpleDetailViewModel(title: response.title,
+                                                  description: response.overview,
+                                                  imageWidth: "400",
+                                                  posterPath: response.posterPath)
+            viewController?.displayMovieDetail(viewModel: viewModel)
+        }
+    }
 }

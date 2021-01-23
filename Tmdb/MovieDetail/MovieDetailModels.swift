@@ -25,14 +25,20 @@ enum GetMovieDetail {
         
         struct Response: Codable {
             let id: Int?
-            let backdrop_path: String?
             let overview: String?
-            let original_language: String?
+            let originalLanguage: String?
+            let posterPath: String?
             let title: String?
-            let vote_count: Int?
-        }
-        
-        struct ViewModel {
+            let voteCount: Int?
+            
+            enum CodingKeys: String, CodingKey {
+                case id
+                case overview
+                case originalLanguage = "original_language"
+                case posterPath = "poster_path"
+                case title
+                case voteCount = "vote_count"
+            }
         }
     }
 }

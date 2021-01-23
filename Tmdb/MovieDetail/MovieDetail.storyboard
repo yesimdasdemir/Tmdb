@@ -17,43 +17,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bgz-VB-thH">
-                                <rect key="frame" x="0.0" y="44" width="414" height="718"/>
-                                <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SbP-G9-MK2">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="718"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2xU-D3-EI4">
-                                            <size key="itemSize" width="128" height="128"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        </collectionViewFlowLayout>
-                                        <cells/>
-                                    </collectionView>
-                                </subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8bF-bv-OFp">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="SbP-G9-MK2" secondAttribute="bottom" id="5Bu-rH-8Q7"/>
-                                    <constraint firstAttribute="trailing" secondItem="SbP-G9-MK2" secondAttribute="trailing" id="9Op-7f-8v3"/>
-                                    <constraint firstItem="SbP-G9-MK2" firstAttribute="top" secondItem="bgz-VB-thH" secondAttribute="top" id="OBX-2r-2Rx"/>
-                                    <constraint firstItem="SbP-G9-MK2" firstAttribute="leading" secondItem="bgz-VB-thH" secondAttribute="leading" id="WKt-6f-s9i"/>
-                                    <constraint firstItem="SbP-G9-MK2" firstAttribute="leading" secondItem="bgz-VB-thH" secondAttribute="leading" id="d8b-G1-L5g"/>
-                                    <constraint firstAttribute="bottom" secondItem="SbP-G9-MK2" secondAttribute="bottom" id="jCq-pN-AdC"/>
-                                    <constraint firstItem="SbP-G9-MK2" firstAttribute="top" secondItem="bgz-VB-thH" secondAttribute="top" id="mTR-Nt-5c4"/>
-                                    <constraint firstAttribute="trailing" secondItem="SbP-G9-MK2" secondAttribute="trailing" id="nyS-UK-nzK"/>
-                                </constraints>
-                            </view>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </tableView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="kgI-PK-Zn0"/>
+                        <viewLayoutGuide key="safeArea" id="qF1-0t-moD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="bgz-VB-thH" firstAttribute="trailing" secondItem="kgI-PK-Zn0" secondAttribute="trailing" id="2lN-py-tFL"/>
-                            <constraint firstItem="bgz-VB-thH" firstAttribute="leading" secondItem="kgI-PK-Zn0" secondAttribute="leading" id="AQM-mB-vH8"/>
-                            <constraint firstItem="bgz-VB-thH" firstAttribute="top" secondItem="kgI-PK-Zn0" secondAttribute="top" id="onD-0D-Xgm"/>
-                            <constraint firstItem="kgI-PK-Zn0" firstAttribute="bottom" secondItem="bgz-VB-thH" secondAttribute="bottom" constant="100" id="zsf-Q9-Jwc"/>
+                            <constraint firstItem="8bF-bv-OFp" firstAttribute="top" secondItem="qF1-0t-moD" secondAttribute="top" id="IYd-r9-osX"/>
+                            <constraint firstItem="8bF-bv-OFp" firstAttribute="leading" secondItem="qF1-0t-moD" secondAttribute="leading" id="TJ3-cl-rut"/>
+                            <constraint firstItem="qF1-0t-moD" firstAttribute="trailing" secondItem="8bF-bv-OFp" secondAttribute="trailing" id="h7o-gs-czL"/>
+                            <constraint firstItem="qF1-0t-moD" firstAttribute="bottom" secondItem="8bF-bv-OFp" secondAttribute="bottom" id="y2f-b4-mAU"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="8bF-bv-OFp" id="m3V-e8-0bE"/>
+                        <outlet property="view" destination="5iv-Fa-hyE" id="b23-Xz-Z3L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dpr-NJ-mfH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

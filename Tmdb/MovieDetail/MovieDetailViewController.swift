@@ -13,12 +13,16 @@
 import UIKit
 
 protocol MovieDetailDisplayLogic: class {
-    func displayMovieDetail()
+    func displayMovieDetail(viewModel: SimpleDetailViewModel)
 }
 
 class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic {
     var interactor: MovieDetailBusinessLogic?
     var router: (NSObjectProtocol & MovieDetailRoutingLogic & MovieDetailDataPassing)?
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var viewModel: SimpleDetailViewModel?
     
     // MARK: Object lifecycle
     
@@ -47,38 +51,50 @@ class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic {
         router.dataStore = interactor
     }
     
-    // MARK: Routing
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "MovieDetail"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play,
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind,
                                                             target: self,
+                                       
                                                             action: #selector(starButtonClicked))
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         interactor?.getMovieDetail()
-        
+        registerTableViewCells()
     }
-    
-    // MARK: Do something
-    
-    @objc
-    func displayMovieDetail() {
         
+    func displayMovieDetail(viewModel: SimpleDetailViewModel) {
+        self.viewModel = viewModel
+        tableView.reloadData()
     }
     
     @objc private func starButtonClicked() {
         
+    }
+    
+    private func registerTableViewCells() {
+        let cell = UINib(nibName: "SimpleDetailViewCell", bundle: nil)
+        tableView.register(cell, forCellReuseIdentifier: "SimpleDetailViewCell")
+    }
+}
+
+extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "SimpleDetailViewCell") as? SimpleDetailViewCell {
+            cell.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            cell.simpleDetailView.viewModel = viewModel
+            return cell
+        }
+       return UITableViewCell()
     }
 }
