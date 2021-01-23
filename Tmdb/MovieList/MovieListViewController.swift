@@ -89,9 +89,6 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
         tableView.dataSource = self
         registerTableViewCells()
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
-        tableView.addGestureRecognizer(gestureRecognizer)
-        
         navigationItem.title = "MovieList"
         setSearchViewController()
         
@@ -103,11 +100,6 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
     func displayMovieList(response: GetMovieList.MovieList.Response?) {
         self.response = response
         tableView.reloadData()
-    }
-    
-    @objc
-    private func closeKeyboard() {
-        tableView.keyboardDismissMode = .onDrag
     }
     
     private func setSearchViewController() {
@@ -155,6 +147,7 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
                 })
                 
                 cell.movieItemView.viewModel = viewModel
+                cell.movieItemView.collectionViewDelegate = self
                 
             } else {
                 if let movieItemList = movieItemList {
