@@ -13,15 +13,23 @@
 import UIKit
 
 enum GetMovieDetail {
-    // MARK: Use cases
     
     enum MovieDetail {
-        struct Request {
-            
+        
+        struct Request: Codable {
+            let transactionUrl: String
+            let language: String
+            let selectedId: Int
+            let apiKey: String
         }
         
-        struct Response {
-            
+        struct Response: Codable {
+            let id: Int?
+            let backdrop_path: String?
+            let overview: String?
+            let original_language: String?
+            let title: String?
+            let vote_count: Int?
         }
         
         struct ViewModel {

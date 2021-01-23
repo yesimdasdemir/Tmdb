@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol MovieListRoutingLogic {
-    func routeToMovieDetail()
+    func routeToMovieDetail(selectedMovieId: Int)
 }
 
 protocol MovieListDataPassing {
@@ -26,11 +26,11 @@ class MovieListRouter: NSObject, MovieListRoutingLogic, MovieListDataPassing {
     
     // MARK: Routing
     
-    func routeToMovieDetail() {
+    func routeToMovieDetail(selectedMovieId: Int) {
         let storyboard = UIStoryboard(name: "MovieDetail", bundle: nil)
         let destinationVC = storyboard.instantiateViewController(withIdentifier: "MovieDetail") as! MovieDetailViewController
         var destinationDS = destinationVC.router!.dataStore!
-        passDataToMovieDetail(source: dataStore!, destination: &destinationDS)
+        passDataToMovieDetail(selectedMovieId: selectedMovieId, source: dataStore!, destination: &destinationDS)
         navigateToMovieDetail(source: viewController!, destination: destinationVC)
     }
     
@@ -42,7 +42,7 @@ class MovieListRouter: NSObject, MovieListRoutingLogic, MovieListDataPassing {
     
     //   MARK: Passing data
     
-    func passDataToMovieDetail(source: MovieListDataStore, destination: inout MovieDetailDataStore) {
-        destination.id = "1234"
+    func passDataToMovieDetail(selectedMovieId: Int, source: MovieListDataStore, destination: inout MovieDetailDataStore) {
+        destination.selectedMovieId = selectedMovieId
     }
 }

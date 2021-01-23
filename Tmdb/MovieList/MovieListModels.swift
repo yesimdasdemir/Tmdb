@@ -13,43 +13,68 @@
 import UIKit
 
 enum GetMovieList {
-  // MARK: Use cases
-  
-  enum MovieList {
-    struct Request: Codable {
-        let apiKey: String?
-        let transactionUrl: String
-        let pageId: Int?
+    // MARK: Use cases
+    
+    enum MovieList {
+        struct Request: Codable {
+            let apiKey: String
+            let transactionUrl: String
+            let language: String
+            let page: Int
+            
+            enum CodingKeys: String, CodingKey {
+                case apiKey = "api_key"
+                case transactionUrl
+                case language
+                case page
+            }
+            
+            init(page: Int) {
+                self.apiKey = "fd2b04342048fa2d5f728561866ad52a"
+                self.language = "en-US"
+                self.transactionUrl = "https://api.themoviedb.org/3/movie/popular?language=&api_key=" + String(describing: self.apiKey) + String(page)
+                self.page = page
+            }
+        }
         
-        init(pageId: Int) {
-            self.apiKey = "fd2b04342048fa2d5f728561866ad52a&"
-            self.transactionUrl = "https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=" + String(describing: self.apiKey) + String(pageId)
-            self.pageId = pageId
+        struct Response: Codable {
+            let page: Int?
+            let totalPages: Int?
+            let totalResults: Int?
+            let results: [MovieListItem]?
+            
+            enum CodingKeys: String, CodingKey {
+                case page
+                case totalResults = "total_results"
+                case totalPages = "total_pages"
+                case results
+            }
+        }
+        
+        struct ViewModel {
+            
         }
     }
-    
-    struct Response: Codable {
-        let page: Int?
-        let total_pages: Int?
-        let total_results: Int?
-        let results: [MovieListItem]?
-    }
-    
-    struct ViewModel {
-        
-    }
-  }
 }
 
 struct MovieListItem: Codable {
     let id: Int?
-    let backdrop_path: String?
-    let original_title: String
+    let posterPath: String?
+    let releaseDate: String?
+    let originalTitle: String
     let overview: String?
-    let popularity: Double?
-    let poster_path: String?
-    let release_date: String?
     let title: String?
-    let vote_average: Float?
-    let vote_count: Int?
+    let voteAverage: Float?
+    let voteCount: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case posterPath = "poster_path"
+        case releaseDate = "release_date"
+        case originalTitle = "original_title"
+        case overview
+        case title
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+    }
 }

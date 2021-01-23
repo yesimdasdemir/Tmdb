@@ -67,6 +67,7 @@ class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play,
                                                             target: self,
                                                             action: #selector(starButtonClicked))
+        interactor?.getMovieDetail()
         
     }
     

@@ -16,11 +16,9 @@ protocol MovieListDisplayLogic: class {
     func displayMovieList(response: GetMovieList.MovieList.Response?)
 }
 
-final class MovieListViewController: UIViewController, MovieListDisplayLogic {
+final class MovieListViewController: UICollectionViewController, MovieListDisplayLogic {
     var interactor: MovieListBusinessLogic?
     var router: (NSObjectProtocol & MovieListRoutingLogic & MovieListDataPassing)?
-    
-    @IBOutlet weak var tableView: UITableView!
     
     let searchController = UISearchController(searchResultsController: nil)
     var movieItemList: [MovieListItem]?
@@ -32,6 +30,7 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
             movieItemList = items
         }
     }
+    
     var filteredMovies: [MovieListItem] = []
     
     var isSearchBarEmpty: Bool {
@@ -69,28 +68,16 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
         router.dataStore = interactor
     }
     
-    // MARK: Routing
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        registerTableViewCells()
-        
         navigationItem.title = "MovieList"
+        collectionView.delegate = self
+        collectionView.dataSource = self
         setSearchViewController()
+        initCollectionView()
         
         interactor?.getMovieList()
     }
@@ -99,7 +86,7 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
     
     func displayMovieList(response: GetMovieList.MovieList.Response?) {
         self.response = response
-        tableView.reloadData()
+        collectionView.reloadData()
     }
     
     private func setSearchViewController() {
@@ -118,62 +105,61 @@ final class MovieListViewController: UIViewController, MovieListDisplayLogic {
                 return (item.title?.lowercased().contains(searchText.lowercased()) ?? false)
             }
         }
-        
-        tableView.reloadData()
     }
     
-    private func registerTableViewCells() {
-        let cell = UINib(nibName: "MovieItemViewCell", bundle: nil)
-        tableView.register(cell, forCellReuseIdentifier: "MovieItemViewCell")
-    }
-}
-
-extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if isFiltering {
+            filteredMovies.count
+        }
+        return movieItemList?.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "MovieItemViewCell") as? MovieItemViewCell {
-            
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as? CustomCollectionViewCell {
             if isFiltering {
                 
-                 let viewModel = filteredMovies.map({ item -> SingleItemViewModel in
+                let viewModel = filteredMovies.map({ item -> SingleItemViewModel in
                     return SingleItemViewModel(title: item.title,
-                                               subTitle: item.release_date,
+                                               subTitle: item.releaseDate,
                                                imageWidth: "200",
-                                               posterPath: item.poster_path!)
+                                               posterPath: item.posterPath!)
                 })
                 
-                cell.movieItemView.viewModel = viewModel
-                cell.movieItemView.collectionViewDelegate = self
+                cell.singleItemView.viewModel = viewModel[indexPath.row]
                 
             } else {
                 if let movieItemList = movieItemList {
                     
                     let viewModel = movieItemList.map({ item -> SingleItemViewModel in
-                       return SingleItemViewModel(title: item.title,
-                                                  subTitle: item.release_date,
-                                                  imageWidth: "200",
-                                                  posterPath: item.poster_path!)
-                   })
-
-                    cell.movieItemView.viewModel = viewModel
-                    cell.movieItemView.collectionViewDelegate = self
+                        return SingleItemViewModel(title: item.title,
+                                                   subTitle: item.releaseDate,
+                                                   imageWidth: "200",
+                                                   posterPath: item.posterPath!)
+                    })
+                    
+                    cell.singleItemView.viewModel = viewModel[indexPath.row]
                 }
             }
             return cell
         }
-        return UITableViewCell()
+        return UICollectionViewCell()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        router?.routeToMovieDetail(selectedMovieId: indexPath.row)
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        router?.routeToMovieDetail()
+    private func initCollectionView() {
+        let nibName = String(describing: CustomCollectionViewCell.self)
+        collectionView.register(UINib(nibName: nibName, bundle: Bundle(for: Self.self)), forCellWithReuseIdentifier: nibName)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+}
+
+extension MovieListViewController: UICollectionViewDelegateFlowLayout {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 200, height: 300)
     }
 }
 
@@ -181,11 +167,6 @@ extension MovieListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
-    }
-}
-
-extension MovieListViewController: MovieItemViewProtocol {
-    func didSelectRow(with id: Int) {
-        router?.routeToMovieDetail()
+        collectionView.reloadData()
     }
 }

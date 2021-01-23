@@ -17,23 +17,45 @@ protocol MovieDetailBusinessLogic {
 }
 
 protocol MovieDetailDataStore {
-    var id: String? { get set }
+    var selectedMovieId: Int { get set }
 }
 
 final class MovieDetailInteractor: MovieDetailBusinessLogic, MovieDetailDataStore {
-   
+    
     var presenter: MovieDetailPresentationLogic?
     var worker: MovieDetailWorker?
     
-    var id: String?
+    var selectedMovieId: Int = 0
     
     // MARK: Do something
     
     func getMovieDetail() {
-        worker = MovieDetailWorker()
-        worker?.doSomeWork()
         
-        let response = GetMovieDetail.MovieDetail.Response()
-        presenter?.presentMovieDetail(response: response)
+        let url = URL(string: "https://api.themoviedb.org/3/movie/287947?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a")
+        
+        let session = URLSession.shared
+        
+        if let url = url {
+            let task = session.dataTask(with: url) { (data, response, error) in
+                
+                if error != nil {
+                    debugPrint("Error, no data!")
+                } else {
+                    
+                    if let data = data {
+                        do {
+                            let response = try JSONDecoder().decode(GetMovieDetail.MovieDetail.Response.self, from: data)
+                            DispatchQueue.main.async { [weak self] in
+                                debugPrint(response)
+                                self?.presenter?.presentMovieDetail(response: response)
+                            }
+                        } catch  {
+                            debugPrint(error)
+                        }
+                    }
+                }
+            }
+            task.resume()
+        }
     }
 }
