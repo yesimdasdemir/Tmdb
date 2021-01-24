@@ -9,7 +9,7 @@ import UIKit
 
 final class CustomCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var singleItemView: SingleItemView!
+    @IBOutlet private weak var singleItemView: SingleItemView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

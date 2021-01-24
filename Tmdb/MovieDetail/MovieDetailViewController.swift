@@ -12,6 +12,10 @@
 
 import UIKit
 
+protocol MovieDetailFavoriteProtocol: AnyObject {
+    func shouldRefresh(selectedId: Int)
+}
+
 protocol MovieDetailDisplayLogic: class {
     func displayMovieDetail(viewModel: SimpleDetailViewModel)
 }
@@ -20,14 +24,16 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
     var interactor: MovieDetailBusinessLogic?
     var router: (NSObjectProtocol & MovieDetailRoutingLogic & MovieDetailDataPassing)?
     
-    @IBOutlet weak var tableView: UITableView!
-    private var favoriteArray: [Int] = []
+    @IBOutlet private weak var tableView: UITableView!
+    weak var favoriDelegate: MovieDetailFavoriteProtocol?
     
-    private var viewModel: SimpleDetailViewModel?
+    private var favoriteArray: [Int] = []
     private var favoritebutton: UIButton = UIButton(type: .custom)
     private var selectedMovieId: Int {
         return (interactor?.getSelectedMovieId())!
     }
+    
+    var viewModel: SimpleDetailViewModel?
     let userDefaults = UserDefaults.standard
     
     // MARK: Object lifecycle
@@ -76,26 +82,6 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
         tableView.reloadData()
     }
     
-    @objc private func starButtonClicked() {
-        
-        favoritebutton.isSelected = !favoritebutton.isSelected
-        let imageName: String = favoritebutton.isSelected ? "starFilled" : "star"
-        favoritebutton.setImage(UIImage(named: imageName), for: .normal)
-        
-        if var favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int] {
-            
-            if !favArray.contains(selectedMovieId) {
-                favArray.append(selectedMovieId)
-            } else {
-                favArray.remove(at: favArray.firstIndex(of: selectedMovieId)!)
-            }
-            userDefaults.setValue(favArray, forKey: "favoriteMoviesArray")
-        } else {
-            favoriteArray.append(selectedMovieId)
-            userDefaults.setValue(favoriteArray, forKey: "favoriteMoviesArray")
-        }
-    }
-    
     private func addFavoriteButton() {
         
         if let favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int], favArray.contains(selectedMovieId) {
@@ -111,6 +97,30 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
         self.navigationItem.rightBarButtonItem = barButton
         
     }
+    
+    @objc private func starButtonClicked() {
+        
+        favoritebutton.isSelected = !favoritebutton.isSelected
+        
+        let imageName: String = favoritebutton.isSelected ? "starFilled" : "star"
+        favoritebutton.setImage(UIImage(named: imageName), for: .normal)
+        
+        if var favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int] {
+            
+            if !favArray.contains(selectedMovieId) {
+                favArray.append(selectedMovieId)
+            } else {
+                favArray.remove(at: favArray.firstIndex(of: selectedMovieId)!)
+            }
+            userDefaults.setValue(favArray, forKey: "favoriteMoviesArray")
+        } else {
+            favoriteArray.append(selectedMovieId)
+            userDefaults.setValue(favoriteArray, forKey: "favoriteMoviesArray")
+        }
+        
+        favoriDelegate?.shouldRefresh(selectedId: selectedMovieId)
+    }
+    
     
     private func registerTableViewCells() {
         let cell = UINib(nibName: "SimpleDetailViewCell", bundle: nil)

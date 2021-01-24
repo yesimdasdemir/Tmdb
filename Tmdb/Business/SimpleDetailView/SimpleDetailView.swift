@@ -8,11 +8,11 @@
 import UIKit
 
 final class SimpleDetailView: UIView {
-    @IBOutlet weak var view: UIView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private weak var view: UIView!
+    @IBOutlet private weak var imageView: UIImageView!
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
     
     private let nibName = String(describing: CustomCollectionViewCell.self)
     

@@ -86,6 +86,12 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
         initCollectionView()
         interactor?.getMovieList(pageNo: 1)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        collectionView.reloadData()
+    }
         
     func displayMovieList(response: GetMovieList.MovieList.Response?) {
         self.response = response
@@ -197,5 +203,13 @@ extension MovieListViewController: UISearchResultsUpdating {
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
         collectionView.reloadData()
+    }
+}
+
+extension MovieListViewController: MovieDetailFavoriteProtocol {
+    func shouldRefresh(selectedId: Int) {
+        if let index = movieItemList.firstIndex(where: { $0.id == selectedId}) {
+            collectionView.reloadItems(at: [IndexPath(index: index)])
+        }
     }
 }
