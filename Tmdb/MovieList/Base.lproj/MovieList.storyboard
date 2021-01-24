@@ -10,7 +10,7 @@
         <!--Movie List View Controller-->
         <scene sceneID="VzV-B5-3iO">
             <objects>
-                <collectionViewController id="j12-AR-JR1" customClass="MovieListViewController" customModule="Tmdb" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="MovieListViewController" id="j12-AR-JR1" customClass="MovieListViewController" customModule="Tmdb" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="9g7-V2-fGK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

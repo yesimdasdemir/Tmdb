@@ -61,7 +61,7 @@ struct MovieListItem: Codable {
     let id: Int?
     let posterPath: String?
     let releaseDate: String?
-    let originalTitle: String
+    let originalTitle: String?
     let overview: String?
     let title: String?
     let voteAverage: Float?
