@@ -41,7 +41,7 @@ final class SingleItemView: UIView {
     
     private func initView(viewModel: SingleItemViewModel) {
         
-        if let imageLink = viewModel.imageLink,let url = URL(string: imageLink) {
+        if let imageLink = viewModel.imageLink, let url = URL(string: imageLink) {
             load(url: url)
         }
 
@@ -50,9 +50,9 @@ final class SingleItemView: UIView {
         if let favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int], let id = viewModel.id {
             if favArray.contains(id) {
                 favoriteImageView.image = UIImage(named: "starFilled")
-                return
+            } else {
+                favoriteImageView.image = UIImage(named: "star")
             }
-            favoriteImageView.image = UIImage(named: "star")
         } else {
             favoriteImageView.image = UIImage(named: "star")
         }

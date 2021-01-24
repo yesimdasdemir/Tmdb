@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MovieDetailFavoriteProtocol: AnyObject {
-    func shouldRefresh(selectedId: Int)
+    func shouldRefresh()
 }
 
 protocol MovieDetailDisplayLogic: class {
@@ -90,15 +90,15 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
             favoritebutton.setImage(UIImage(named: "star"), for: .normal)
         }
         
-        favoritebutton.addTarget(self, action: #selector(starButtonClicked), for: .touchUpInside)
+        favoritebutton.addTarget(self, action: #selector(favoriteButtonClicked), for: .touchUpInside)
         
         let barButton = UIBarButtonItem(customView: favoritebutton)
         
         self.navigationItem.rightBarButtonItem = barButton
-        
     }
     
-    @objc private func starButtonClicked() {
+    @objc
+    private func favoriteButtonClicked() {
         
         favoritebutton.isSelected = !favoritebutton.isSelected
         
@@ -118,7 +118,7 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
             userDefaults.setValue(favoriteArray, forKey: "favoriteMoviesArray")
         }
         
-        favoriDelegate?.shouldRefresh(selectedId: selectedMovieId)
+        favoriDelegate?.shouldRefresh()
     }
     
     

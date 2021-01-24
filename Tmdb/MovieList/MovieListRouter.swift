@@ -30,6 +30,7 @@ final class MovieListRouter: NSObject, MovieListRoutingLogic, MovieListDataPassi
         let storyboard = UIStoryboard(name: "MovieDetail", bundle: nil)
         let destinationVC = storyboard.instantiateViewController(withIdentifier: "MovieDetail") as! MovieDetailViewController
         var destinationDS = destinationVC.router!.dataStore!
+        destinationVC.favoriDelegate = viewController
         passDataToMovieDetail(selectedMovieId: selectedMovieId, source: dataStore!, destination: &destinationDS)
         navigateToMovieDetail(source: viewController!, destination: destinationVC)
     }
