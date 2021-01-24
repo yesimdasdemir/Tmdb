@@ -57,9 +57,10 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
         super.viewDidLoad()
         
         navigationItem.title = "MovieDetail"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind,
-                                                            target: self,
-                                                            action: #selector(starButtonClicked))
+        
+        let image: UIImage? = UIImage(named: "star", in: Bundle(for: Self.self), compatibleWith: nil)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(starButtonClicked))
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -74,7 +75,8 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
     }
     
     @objc private func starButtonClicked() {
-        
+        let image: UIImage? = UIImage(named: "starFilled", in: Bundle(for: Self.self), compatibleWith: nil)
+        navigationItem.rightBarButtonItem =  UIBarButtonItem(image: image, style: .done, target: self, action: #selector(starButtonClicked))
     }
     
     private func registerTableViewCells() {
@@ -90,10 +92,15 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SimpleDetailViewCell") as? SimpleDetailViewCell {
-            cell.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            cell.frame = UIScreen.main.bounds
+            cell.backgroundColor = .red
             cell.simpleDetailView.viewModel = viewModel
             return cell
         }
        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height
     }
 }

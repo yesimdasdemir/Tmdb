@@ -18,7 +18,9 @@ protocol MovieDetailPresentationLogic {
 
 final class MovieDetailPresenter: MovieDetailPresentationLogic {
     weak var viewController: MovieDetailDisplayLogic?
-    private var imageWidth: String = "400"
+    
+    
+    private var imageWidth: String = String(describing: Int(UIScreen.main.bounds.width / 100.0) * 100)
     
     // MARK: Methods
     
