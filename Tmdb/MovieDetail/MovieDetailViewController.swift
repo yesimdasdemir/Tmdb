@@ -100,7 +100,6 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
     @objc
     private func favoriteButtonClicked() {
         
-        favoritebutton.isSelected = !favoritebutton.isSelected
         var imageName: String = ""
         
         if var favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int] {
