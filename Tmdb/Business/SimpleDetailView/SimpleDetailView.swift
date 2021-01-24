@@ -10,8 +10,8 @@ import UIKit
 final class SimpleDetailView: UIView {
     @IBOutlet private weak var view: UIView!
     @IBOutlet private weak var imageView: UIImageView!
-    
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subTitleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
     private let nibName = String(describing: CustomCollectionViewCell.self)
@@ -42,6 +42,11 @@ final class SimpleDetailView: UIView {
         }
                 
         titleLabel.text = viewModel.title
+        
+        if let voteCount = viewModel.voteCount {
+            subTitleLabel.text = "Vote Count: \(voteCount)"
+        }
+       
         descriptionLabel.text = viewModel.description
     }
     

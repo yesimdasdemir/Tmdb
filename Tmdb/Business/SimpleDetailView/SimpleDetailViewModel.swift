@@ -10,14 +10,16 @@ import Foundation
 struct SimpleDetailViewModel {
     let title: String?
     let description: String?
+    let voteCount: Int?
     let imageWidth: String
     let posterPath: String?
     var imageLink: String?
     
-    init(title: String? = nil, description: String? = nil, imageWidth: String = "200", posterPath: String? = "") {
+    init(title: String? = nil, description: String? = nil, voteCount: Int? = nil, imageWidth: String = "200", posterPath: String? = "") {
         
         self.title = title
         self.description = description
+        self.voteCount = voteCount
         self.imageWidth = imageWidth
         self.posterPath = posterPath
         

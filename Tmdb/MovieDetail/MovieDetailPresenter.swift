@@ -30,6 +30,7 @@ final class MovieDetailPresenter: MovieDetailPresentationLogic {
             
             let viewModel = SimpleDetailViewModel(title: response.title,
                                                   description: response.overview,
+                                                  voteCount: response.voteCount,
                                                   imageWidth: imageWidth,
                                                   posterPath: response.posterPath)
             
