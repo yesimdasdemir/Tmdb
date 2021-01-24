@@ -9,13 +9,16 @@ import UIKit
 
 final class SingleItemView: UIView {
     
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var stackView: UIStackView!
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subTitleLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subTitleLabel: UILabel!
     
+    private let cornerRadiusValue: CGFloat = 10.0
+    
+    // MARK: Initialize methods
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,24 +44,24 @@ final class SingleItemView: UIView {
         if let imageLink = viewModel.imageLink,let url = URL(string: imageLink) {
             load(url: url)
         }
-                
-        imageView.layer.cornerRadius = 10
+        
+        imageView.layer.cornerRadius = cornerRadiusValue
         imageView.clipsToBounds = true
-                
+        
         titleLabel.text = viewModel.title
         subTitleLabel.text = viewModel.subTitle
     }
     
-    func load(url: URL) {
+    private func load(url: URL) {
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url) {
-                    DispatchQueue.main.async {
-                        self?.imageView.image = UIImage(data: data)
-                    }
+                DispatchQueue.main.async {
+                    self?.imageView.image = UIImage(data: data)
+                }
             }
         }
     }
-
+    
     // MARK: LoadNib
     
     private func loadNib() {

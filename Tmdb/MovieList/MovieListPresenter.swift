@@ -18,8 +18,8 @@ protocol MovieListPresentationLogic {
 
 final class MovieListPresenter: MovieListPresentationLogic {
     weak var viewController: MovieListDisplayLogic?
-    
-    // MARK: Do something
+        
+    // MARK: Methods
     
     func presentMovieList(response: GetMovieList.MovieList.Response?) {
         viewController?.displayMovieList(response: response)

@@ -16,13 +16,13 @@ protocol MovieDetailDisplayLogic: class {
     func displayMovieDetail(viewModel: SimpleDetailViewModel)
 }
 
-class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic {
+final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic {
     var interactor: MovieDetailBusinessLogic?
     var router: (NSObjectProtocol & MovieDetailRoutingLogic & MovieDetailDataPassing)?
     
     @IBOutlet weak var tableView: UITableView!
     
-    var viewModel: SimpleDetailViewModel?
+    private var viewModel: SimpleDetailViewModel?
     
     // MARK: Object lifecycle
     
@@ -59,7 +59,6 @@ class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic {
         navigationItem.title = "MovieDetail"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind,
                                                             target: self,
-                                       
                                                             action: #selector(starButtonClicked))
         
         tableView.delegate = self

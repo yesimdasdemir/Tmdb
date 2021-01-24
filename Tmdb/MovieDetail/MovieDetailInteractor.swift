@@ -27,7 +27,7 @@ final class MovieDetailInteractor: MovieDetailBusinessLogic, MovieDetailDataStor
     
     var selectedMovieId: Int = 0
     
-    // MARK: Do something
+    // MARK: Methods
     
     func getMovieDetail() {
         let urlLink = "https://api.themoviedb.org/3/movie/\(selectedMovieId)" + "?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a"

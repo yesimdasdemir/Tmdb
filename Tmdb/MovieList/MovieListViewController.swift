@@ -22,6 +22,7 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     
     let searchController = UISearchController(searchResultsController: nil)
     var movieItemList: [MovieListItem] = []
+    
     var response: GetMovieList.MovieList.Response? {
         didSet {
             guard let items = response?.results else {
@@ -42,6 +43,8 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     }
     
     private var waiting: Bool = false
+    private let collectionViewItemHeight: CGFloat = 300.0
+    private var minimumLineSpacing: CGFloat = 15.0
     
     // MARK: Object lifecycle
     
@@ -78,14 +81,12 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
         navigationItem.title = "MovieList"
         collectionView.delegate = self
         collectionView.dataSource = self
+        
         setSearchViewController()
         initCollectionView()
-        
         interactor?.getMovieList(pageNo: 1)
     }
-    
-    // MARK: Do something
-    
+        
     func displayMovieList(response: GetMovieList.MovieList.Response?) {
         self.response = response
         collectionView.reloadData()
@@ -103,7 +104,7 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
         definesPresentationContext = true
     }
     
-    func filterContentForSearchText(_ searchText: String,
+    private func filterContentForSearchText(_ searchText: String,
                                     category: MovieListItem? = nil) {
         
         filteredMovies = movieItemList.filter { item -> Bool in
@@ -168,7 +169,7 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 15
+        return minimumLineSpacing
     }
     
     private func loadMoreData() {        
@@ -180,14 +181,12 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     private func initCollectionView() {
         let nibName = String(describing: CustomCollectionViewCell.self)
         collectionView.register(UINib(nibName: nibName, bundle: Bundle(for: Self.self)), forCellWithReuseIdentifier: nibName)
-        collectionView.dataSource = self
-        collectionView.delegate = self
     }
 }
 
 extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: 300)
+        return CGSize(width: (UIScreen.main.bounds.width / 2), height: collectionViewItemHeight)
     }
 }
 

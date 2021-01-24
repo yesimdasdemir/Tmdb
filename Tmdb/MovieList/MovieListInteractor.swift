@@ -25,10 +25,10 @@ final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
     
     var response: GetMovieList.MovieList.Response?
     
+    // MARK: Methods
+    
     func getMovieList(pageNo: Int) {
         
-        worker = MovieListWorker()
-                
         let url = URL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a&page=\(pageNo)")
         
         let session = URLSession.shared
@@ -38,9 +38,7 @@ final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
                 
                 if error != nil {
                     let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-                    
                     let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    
                     alert.addAction(okButton)
                     
                 } else {
@@ -50,10 +48,11 @@ final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
                         do {
                             let response = try JSONDecoder().decode(GetMovieList.MovieList.Response.self, from: data)
                             DispatchQueue.main.async { [weak self] in
-                                debugPrint(response)
-                                debugPrint("\(pageNo). Page Loading")
                                 self?.response = response
                                 self?.presenter?.presentMovieList(response: response)
+                                
+                                debugPrint(response)
+                                debugPrint("\(pageNo). Page Loading")
                             }
                         } catch  {
                             debugPrint(error)

@@ -18,8 +18,9 @@ protocol MovieDetailPresentationLogic {
 
 final class MovieDetailPresenter: MovieDetailPresentationLogic {
     weak var viewController: MovieDetailDisplayLogic?
+    private var imageWidth: String = "400"
     
-    // MARK: Do something
+    // MARK: Methods
     
     func presentMovieDetail(response: GetMovieDetail.MovieDetail.Response?) {
         
@@ -27,7 +28,7 @@ final class MovieDetailPresenter: MovieDetailPresentationLogic {
             
             let viewModel = SimpleDetailViewModel(title: response.title,
                                                   description: response.overview,
-                                                  imageWidth: "400",
+                                                  imageWidth: imageWidth,
                                                   posterPath: response.posterPath)
             viewController?.displayMovieDetail(viewModel: viewModel)
         }
