@@ -101,22 +101,27 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
     private func favoriteButtonClicked() {
         
         favoritebutton.isSelected = !favoritebutton.isSelected
-        
-        let imageName: String = favoritebutton.isSelected ? "starFilled" : "star"
-        favoritebutton.setImage(UIImage(named: imageName), for: .normal)
+        var imageName: String = ""
         
         if var favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int] {
             
             if !favArray.contains(selectedMovieId) {
                 favArray.append(selectedMovieId)
+                imageName = "starFilled"
             } else {
                 favArray.remove(at: favArray.firstIndex(of: selectedMovieId)!)
+                imageName = "star"
             }
             userDefaults.setValue(favArray, forKey: "favoriteMoviesArray")
+            
         } else {
             favoriteArray.append(selectedMovieId)
             userDefaults.setValue(favoriteArray, forKey: "favoriteMoviesArray")
+            
+            imageName = "starFilled"
         }
+        
+        favoritebutton.setImage(UIImage(named: imageName), for: .normal)
         
         favoriDelegate?.shouldRefresh()
     }
