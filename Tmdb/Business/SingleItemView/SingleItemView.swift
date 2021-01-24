@@ -41,7 +41,10 @@ final class SingleItemView: UIView {
         if let imageLink = viewModel.imageLink,let url = URL(string: imageLink) {
             load(url: url)
         }
-        
+                
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+                
         titleLabel.text = viewModel.title
         subTitleLabel.text = viewModel.subTitle
     }
