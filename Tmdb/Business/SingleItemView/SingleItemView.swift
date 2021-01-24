@@ -44,19 +44,15 @@ final class SingleItemView: UIView {
         if let imageLink = viewModel.imageLink, let url = URL(string: imageLink) {
             load(url: url)
         }
-
+        
         let userDefaults = UserDefaults.standard
         
-        if let favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int], let id = viewModel.id {
-            if favArray.contains(id) {
-                favoriteImageView.image = UIImage(named: "starFilled")
-            } else {
-                favoriteImageView.image = UIImage(named: "star")
-            }
+        if let favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int], let id = viewModel.id, favArray.contains(id) {
+            favoriteImageView.image = UIImage(named: "starFilled")
         } else {
             favoriteImageView.image = UIImage(named: "star")
         }
-                
+        
         imageView.layer.cornerRadius = cornerRadiusValue
         imageView.clipsToBounds = true
         
