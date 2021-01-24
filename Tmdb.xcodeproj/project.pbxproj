@@ -11,7 +11,6 @@
 		246B504E25B8A86400EC93F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B504D25B8A86400EC93F9 /* SceneDelegate.swift */; };
 		246B505025B8A86400EC93F9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B504F25B8A86400EC93F9 /* ViewController.swift */; };
 		246B505325B8A86400EC93F9 /* MovieList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 246B505125B8A86400EC93F9 /* MovieList.storyboard */; };
-		246B505625B8A86400EC93F9 /* Tmdb.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 246B505425B8A86400EC93F9 /* Tmdb.xcdatamodeld */; };
 		246B505825B8A86500EC93F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 246B505725B8A86500EC93F9 /* Assets.xcassets */; };
 		246B505B25B8A86500EC93F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 246B505925B8A86500EC93F9 /* LaunchScreen.storyboard */; };
 		246C755C25BB486100F5353F /* CustomCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 246C755A25BB486100F5353F /* CustomCollectionViewCell.xib */; };
@@ -45,7 +44,6 @@
 		246B504D25B8A86400EC93F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		246B504F25B8A86400EC93F9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		246B505225B8A86400EC93F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MovieList.storyboard; sourceTree = "<group>"; };
-		246B505525B8A86400EC93F9 /* Tmdb.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tmdb.xcdatamodel; sourceTree = "<group>"; };
 		246B505725B8A86500EC93F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		246B505A25B8A86500EC93F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		246B505C25B8A86500EC93F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				246B505725B8A86500EC93F9 /* Assets.xcassets */,
 				246B505925B8A86500EC93F9 /* LaunchScreen.storyboard */,
 				246B505C25B8A86500EC93F9 /* Info.plist */,
-				246B505425B8A86400EC93F9 /* Tmdb.xcdatamodeld */,
 			);
 			path = Tmdb;
 			sourceTree = "<group>";
@@ -273,7 +270,6 @@
 				246C755D25BB486100F5353F /* CustomCollectionViewCell.swift in Sources */,
 				246E0B7D25BA080E00DFFF95 /* MovieListModels.swift in Sources */,
 				246E0B8E25BA1CEC00DFFF95 /* MovieDetailViewController.swift in Sources */,
-				246B505625B8A86400EC93F9 /* Tmdb.xcdatamodeld in Sources */,
 				246B505025B8A86400EC93F9 /* ViewController.swift in Sources */,
 				246E0B8F25BA1CEC00DFFF95 /* MovieDetailInteractor.swift in Sources */,
 				24E0BDAF25BCC660001CD898 /* SimpleDetailViewModel.swift in Sources */,
@@ -491,19 +487,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		246B505425B8A86400EC93F9 /* Tmdb.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				246B505525B8A86400EC93F9 /* Tmdb.xcdatamodel */,
-			);
-			currentVersion = 246B505525B8A86400EC93F9 /* Tmdb.xcdatamodel */;
-			path = Tmdb.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 246B504025B8A86400EC93F9 /* Project object */;
 }
