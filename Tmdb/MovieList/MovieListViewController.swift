@@ -21,13 +21,13 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     var router: (NSObjectProtocol & MovieListRoutingLogic & MovieListDataPassing)?
     
     let searchController = UISearchController(searchResultsController: nil)
-    var movieItemList: [MovieListItem]?
+    var movieItemList: [MovieListItem] = []
     var response: GetMovieList.MovieList.Response? {
         didSet {
             guard let items = response?.results else {
                 return
             }
-            movieItemList = items
+            movieItemList.append(contentsOf: items)
         }
     }
     
@@ -40,6 +40,8 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
+    
+    private var waiting: Bool = false
     
     // MARK: Object lifecycle
     
@@ -79,7 +81,7 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
         setSearchViewController()
         initCollectionView()
         
-        interactor?.getMovieList()
+        interactor?.getMovieList(pageNo: 1)
     }
     
     // MARK: Do something
@@ -87,6 +89,7 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
     func displayMovieList(response: GetMovieList.MovieList.Response?) {
         self.response = response
         collectionView.reloadData()
+        waiting = false
     }
     
     private func setSearchViewController() {
@@ -94,16 +97,16 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Movies"
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.accessibilityScroll(.down)
         definesPresentationContext = true
     }
     
     func filterContentForSearchText(_ searchText: String,
                                     category: MovieListItem? = nil) {
         
-        if let response = response, let items = response.results {
-            filteredMovies = items.filter { item -> Bool in
-                return (item.title?.lowercased().contains(searchText.lowercased()) ?? false)
-            }
+        filteredMovies = movieItemList.filter { item -> Bool in
+            return (item.title?.lowercased().contains(searchText.lowercased()) ?? false)
         }
     }
     
@@ -111,7 +114,7 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
         if isFiltering {
             return filteredMovies.count
         }
-        return movieItemList?.count ?? 0
+        return movieItemList.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -128,17 +131,14 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
                 cell.configure(with: viewModel[indexPath.row])
                 
             } else {
-                if let movieItemList = movieItemList {
-                    
-                    let viewModel = movieItemList.map({ item -> SingleItemViewModel in
-                        return SingleItemViewModel(title: item.title,
-                                                   subTitle: item.releaseDate,
-                                                   imageWidth: "200",
-                                                   posterPath: item.posterPath)
-                    })
-                    
-                    cell.configure(with: viewModel[indexPath.row])
-                }
+                let viewModel = movieItemList.map({ item -> SingleItemViewModel in
+                    return SingleItemViewModel(title: item.title,
+                                               subTitle: item.releaseDate,
+                                               imageWidth: "200",
+                                               posterPath: item.posterPath)
+                })
+                
+                cell.configure(with: viewModel[indexPath.row])
             }
             return cell
         }
@@ -152,9 +152,27 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
                 router?.routeToMovieDetail(selectedMovieId: selectedId)
             }
         } else {
-            if let movieItemList = movieItemList, let selectedId: Int = movieItemList[indexPath.row].id {
+            if let selectedId: Int = movieItemList[indexPath.row].id {
                 router?.routeToMovieDetail(selectedMovieId: selectedId)
             }
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if indexPath.row == movieItemList.count - 1  && !waiting {
+            waiting = true;
+            loadMoreData()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    private func loadMoreData() {        
+        if let pageNo: Int = response?.page {
+            interactor?.getMovieList(pageNo: pageNo + 1)
         }
     }
     

@@ -36,7 +36,7 @@ final class SimpleDetailView: UIView {
     
     private func initView(viewModel: SimpleDetailViewModel) {
         
-        if let url = URL(string: viewModel.imageLink) {
+        if let imageLink = viewModel.imageLink, let url = URL(string: imageLink) {
             load(url: url)
         }
                 

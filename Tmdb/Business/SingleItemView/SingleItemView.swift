@@ -38,7 +38,7 @@ final class SingleItemView: UIView {
     
     private func initView(viewModel: SingleItemViewModel) {
         
-        if let url = URL(string: viewModel.imageLink) {
+        if let imageLink = viewModel.imageLink,let url = URL(string: imageLink) {
             load(url: url)
         }
         

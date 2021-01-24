@@ -12,15 +12,19 @@ struct SingleItemViewModel {
     let subTitle: String?
     let imageWidth: String
     let posterPath: String?
-    var imageLink: String
+    var imageLink: String?
     
     init(title: String? = nil, subTitle: String? = nil, imageWidth: String = "200", posterPath: String? = "") {
-        
         self.title = title
         self.subTitle = subTitle
         self.imageWidth = imageWidth
         self.posterPath = posterPath
-        self.imageLink = "https://image.tmdb.org/t/p/w" + imageWidth + posterPath!
+       
+        if let posterPath = posterPath {
+            self.imageLink = "https://image.tmdb.org/t/p/w" + imageWidth + posterPath
+        } else {
+            self.imageLink = nil
+        }
     }
 }
 

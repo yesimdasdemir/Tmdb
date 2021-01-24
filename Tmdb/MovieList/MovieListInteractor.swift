@@ -13,7 +13,7 @@
 import UIKit
 
 protocol MovieListBusinessLogic {
-    func getMovieList()
+    func getMovieList(pageNo: Int)
 }
 
 protocol MovieListDataStore {
@@ -25,13 +25,11 @@ final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
     
     var response: GetMovieList.MovieList.Response?
     
-    func getMovieList() {
+    func getMovieList(pageNo: Int) {
         
         worker = MovieListWorker()
-        
-        let request = GetMovieList.MovieList.Request(page: 2)
-        
-        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a&page=1")
+                
+        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=fd2b04342048fa2d5f728561866ad52a&page=\(pageNo)")
         
         let session = URLSession.shared
         
@@ -53,6 +51,7 @@ final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
                             let response = try JSONDecoder().decode(GetMovieList.MovieList.Response.self, from: data)
                             DispatchQueue.main.async { [weak self] in
                                 debugPrint(response)
+                                debugPrint("\(pageNo). Page Loading")
                                 self?.response = response
                                 self?.presenter?.presentMovieList(response: response)
                             }
