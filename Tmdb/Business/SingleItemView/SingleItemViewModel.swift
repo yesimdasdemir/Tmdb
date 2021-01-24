@@ -8,13 +8,15 @@
 import Foundation
 
 struct SingleItemViewModel {
+    let id: Int?
     let title: String?
     let subTitle: String?
     let imageWidth: String
     let posterPath: String?
     var imageLink: String?
     
-    init(title: String? = nil, subTitle: String? = nil, imageWidth: String = "200", posterPath: String? = "") {
+    init(id: Int? = nil, title: String? = nil, subTitle: String? = nil, imageWidth: String = "200", posterPath: String? = "") {
+        self.id = id
         self.title = title
         self.subTitle = subTitle
         self.imageWidth = imageWidth

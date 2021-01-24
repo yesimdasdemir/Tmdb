@@ -32,6 +32,7 @@ final class MovieDetailPresenter: MovieDetailPresentationLogic {
                                                   description: response.overview,
                                                   imageWidth: imageWidth,
                                                   posterPath: response.posterPath)
+            
             viewController?.displayMovieDetail(viewModel: viewModel)
         }
     }

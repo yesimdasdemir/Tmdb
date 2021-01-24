@@ -14,6 +14,7 @@ import UIKit
 
 protocol MovieDetailBusinessLogic {
     func getMovieDetail()
+    func getSelectedMovieId() -> Int
 }
 
 protocol MovieDetailDataStore {
@@ -58,5 +59,9 @@ final class MovieDetailInteractor: MovieDetailBusinessLogic, MovieDetailDataStor
             }
             task.resume()
         }
+    }
+    
+    func getSelectedMovieId() -> Int {
+        return selectedMovieId
     }
 }

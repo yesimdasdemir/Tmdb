@@ -40,5 +40,10 @@ enum GetMovieDetail {
                 case voteCount = "vote_count"
             }
         }
+        
+        struct ViewModel {
+            let simpleDetailViewModel: SimpleDetailViewModel
+            let selectedMovieId: Int
+        }
     }
 }

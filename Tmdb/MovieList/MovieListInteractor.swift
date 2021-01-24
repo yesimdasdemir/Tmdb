@@ -20,10 +20,13 @@ protocol MovieListDataStore {
 }
 
 final class MovieListInteractor: MovieListBusinessLogic, MovieListDataStore {
+    
+    
     var presenter: MovieListPresentationLogic?
     var worker: MovieListWorker?
     
     var response: GetMovieList.MovieList.Response?
+    var movieId: Int?
     
     // MARK: Methods
     

@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SingleItemView" customModule="Tmdb" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="1ku-BW-vXK"/>
+                <outlet property="favoriteImageView" destination="pj5-JR-OM4" id="JcG-Hg-ebe"/>
                 <outlet property="imageView" destination="9Zp-56-vuh" id="YMO-WT-Aps"/>
                 <outlet property="stackView" destination="j6F-7B-PcA" id="OA7-wd-MYN"/>
                 <outlet property="subTitleLabel" destination="ANF-um-f4u" id="sdr-68-FDq"/>
@@ -45,19 +46,28 @@
                         </label>
                     </subviews>
                 </stackView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pj5-JR-OM4">
+                    <rect key="frame" x="153" y="10" width="32" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="M6b-1P-9VT"/>
+                        <constraint firstAttribute="width" constant="32" id="ZSv-C5-61b"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="j6F-7B-PcA" firstAttribute="top" secondItem="9Zp-56-vuh" secondAttribute="bottom" constant="5" id="0pV-Ka-Td1"/>
+                <constraint firstItem="pj5-JR-OM4" firstAttribute="trailing" secondItem="9Zp-56-vuh" secondAttribute="trailing" id="8qq-RW-Aco"/>
                 <constraint firstItem="9Zp-56-vuh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AaF-ym-PHY"/>
                 <constraint firstAttribute="trailing" secondItem="j6F-7B-PcA" secondAttribute="trailing" id="F3y-hi-7fO"/>
                 <constraint firstAttribute="bottom" secondItem="j6F-7B-PcA" secondAttribute="bottom" id="I03-JD-meM"/>
                 <constraint firstItem="9Zp-56-vuh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Kjz-Ay-S2T"/>
                 <constraint firstAttribute="trailing" secondItem="9Zp-56-vuh" secondAttribute="trailing" constant="15" id="RJM-fw-qzN"/>
+                <constraint firstItem="pj5-JR-OM4" firstAttribute="top" secondItem="9Zp-56-vuh" secondAttribute="top" constant="10" id="aHr-So-Zau"/>
                 <constraint firstItem="j6F-7B-PcA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qFc-7k-b2y"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-74.637681159420296" y="-176.11607142857142"/>
+            <point key="canvasLocation" x="-75.362318840579718" y="-176.11607142857142"/>
         </view>
     </objects>
     <resources>

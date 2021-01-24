@@ -124,7 +124,8 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
             if isFiltering {
                 
                 let viewModel = filteredMovies.map({ item -> SingleItemViewModel in
-                    return SingleItemViewModel(title: item.title,
+                    return SingleItemViewModel(id: item.id,
+                                               title: item.title,
                                                subTitle: item.releaseDate,
                                                imageWidth: "200",
                                                posterPath: item.posterPath)
@@ -134,7 +135,8 @@ final class MovieListViewController: UICollectionViewController, MovieListDispla
                 
             } else {
                 let viewModel = movieItemList.map({ item -> SingleItemViewModel in
-                    return SingleItemViewModel(title: item.title,
+                    return SingleItemViewModel(id: item.id,
+                                               title: item.title,
                                                subTitle: item.releaseDate,
                                                imageWidth: "200",
                                                posterPath: item.posterPath)

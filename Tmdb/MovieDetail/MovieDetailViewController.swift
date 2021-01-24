@@ -21,8 +21,14 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
     var router: (NSObjectProtocol & MovieDetailRoutingLogic & MovieDetailDataPassing)?
     
     @IBOutlet weak var tableView: UITableView!
+    private var favoriteArray: [Int] = []
     
     private var viewModel: SimpleDetailViewModel?
+    private var favoritebutton: UIButton = UIButton(type: .custom)
+    private var selectedMovieId: Int {
+        return (interactor?.getSelectedMovieId())!
+    }
+    let userDefaults = UserDefaults.standard
     
     // MARK: Object lifecycle
     
@@ -58,25 +64,52 @@ final class MovieDetailViewController: UIViewController, MovieDetailDisplayLogic
         
         navigationItem.title = "MovieDetail"
         
-        let image: UIImage? = UIImage(named: "star", in: Bundle(for: Self.self), compatibleWith: nil)
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(starButtonClicked))
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
+        addFavoriteButton()
         interactor?.getMovieDetail()
         registerTableViewCells()
     }
-        
+    
     func displayMovieDetail(viewModel: SimpleDetailViewModel) {
         self.viewModel = viewModel
         tableView.reloadData()
     }
     
     @objc private func starButtonClicked() {
-        let image: UIImage? = UIImage(named: "starFilled", in: Bundle(for: Self.self), compatibleWith: nil)
-        navigationItem.rightBarButtonItem =  UIBarButtonItem(image: image, style: .done, target: self, action: #selector(starButtonClicked))
+        
+        favoritebutton.isSelected = !favoritebutton.isSelected
+        let imageName: String = favoritebutton.isSelected ? "starFilled" : "star"
+        favoritebutton.setImage(UIImage(named: imageName), for: .normal)
+        
+        if var favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int] {
+            
+            if !favArray.contains(selectedMovieId) {
+                favArray.append(selectedMovieId)
+            } else {
+                favArray.remove(at: favArray.firstIndex(of: selectedMovieId)!)
+            }
+            userDefaults.setValue(favArray, forKey: "favoriteMoviesArray")
+        } else {
+            favoriteArray.append(selectedMovieId)
+            userDefaults.setValue(favoriteArray, forKey: "favoriteMoviesArray")
+        }
+    }
+    
+    private func addFavoriteButton() {
+        
+        if let favArray: [Int] = userDefaults.array(forKey: "favoriteMoviesArray") as? [Int], favArray.contains(selectedMovieId) {
+            favoritebutton.setImage(UIImage(named: "starFilled"), for: .normal)
+        } else {
+            favoritebutton.setImage(UIImage(named: "star"), for: .normal)
+        }
+        
+        favoritebutton.addTarget(self, action: #selector(starButtonClicked), for: .touchUpInside)
+        
+        let barButton = UIBarButtonItem(customView: favoritebutton)
+        
+        self.navigationItem.rightBarButtonItem = barButton
+        
     }
     
     private func registerTableViewCells() {
@@ -97,7 +130,7 @@ extension MovieDetailViewController: UITableViewDelegate, UITableViewDataSource 
             cell.simpleDetailView.viewModel = viewModel
             return cell
         }
-       return UITableViewCell()
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
