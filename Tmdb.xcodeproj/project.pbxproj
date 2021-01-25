@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		244F6FFB25BEAABB00B09B03 /* SimpleDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 244F6FFA25BEAABB00B09B03 /* SimpleDetailView.xib */; };
+		244F700925BEAD0700B09B03 /* SimpleDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 244F700825BEAD0700B09B03 /* SimpleDetailView.xib */; };
 		2453E28825BE367300EAA557 /* TmdbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2453E28725BE367300EAA557 /* TmdbTests.swift */; };
 		2453E29625BE371900EAA557 /* MovieListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2453E26425BE28B700EAA557 /* MovieListViewControllerTests.swift */; };
 		246B504C25B8A86400EC93F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246B504B25B8A86400EC93F9 /* AppDelegate.swift */; };
@@ -51,7 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		244F6FFA25BEAABB00B09B03 /* SimpleDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleDetailView.xib; sourceTree = "<group>"; };
+		244F700825BEAD0700B09B03 /* SimpleDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleDetailView.xib; sourceTree = "<group>"; };
 		2453E26425BE28B700EAA557 /* MovieListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewControllerTests.swift; sourceTree = "<group>"; };
 		2453E28525BE367300EAA557 /* TmdbTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TmdbTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2453E28725BE367300EAA557 /* TmdbTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmdbTests.swift; sourceTree = "<group>"; };
@@ -226,9 +226,9 @@
 		24E0BDA025BCC5E2001CD898 /* SimpleDetailView */ = {
 			isa = PBXGroup;
 			children = (
-				244F6FFA25BEAABB00B09B03 /* SimpleDetailView.xib */,
 				24E0BDA125BCC5EE001CD898 /* Cell */,
 				24E0BDA825BCC63A001CD898 /* SimpleDetailView.swift */,
+				244F700825BEAD0700B09B03 /* SimpleDetailView.xib */,
 				24E0BDAE25BCC660001CD898 /* SimpleDetailViewModel.swift */,
 			);
 			path = SimpleDetailView;
@@ -335,7 +335,7 @@
 				246B505825B8A86500EC93F9 /* Assets.xcassets in Resources */,
 				24E0BD6025BB4962001CD898 /* SingleItemView.xib in Resources */,
 				246B505325B8A86400EC93F9 /* MovieList.storyboard in Resources */,
-				244F6FFB25BEAABB00B09B03 /* SimpleDetailView.xib in Resources */,
+				244F700925BEAD0700B09B03 /* SimpleDetailView.xib in Resources */,
 				246E0B9325BA1F3500DFFF95 /* MovieDetail.storyboard in Resources */,
 				246C755C25BB486100F5353F /* CustomCollectionViewCell.xib in Resources */,
 			);
@@ -507,7 +507,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -562,7 +562,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
