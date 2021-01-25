@@ -16,3 +16,4 @@ from) the favorite list. With refreshing you can see favorite movies come back t
 
 ![Simulator Screen Shot - iPhone 11 - 2021-01-25 at 01 56 21](https://user-images.githubusercontent.com/28412821/105646541-8051d100-5eb1-11eb-8327-2a129612716e.png)
 
+![Simulator Screen Shot - iPhone 11 - 2021-01-25 at 01 59 52](https://user-images.githubusercontent.com/28412821/105647743-c8282680-5eb8-11eb-9473-02796360073a.png)
